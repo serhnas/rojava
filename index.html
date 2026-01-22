@@ -11,6 +11,7 @@
             --card-bg: #ffffff;
             --text-color: #333333;
             --border-radius: 8px;
+            --success-color: #28a745;
         }
 
         body {
@@ -21,7 +22,7 @@
             padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
         }
 
@@ -30,8 +31,9 @@
             padding: 30px;
             border-radius: var(--border-radius);
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
+            margin-top: 20px;
         }
 
         h1 {
@@ -54,6 +56,12 @@
             margin-bottom: 20px;
             font-size: 0.9rem;
             border: 1px solid #ffeeba;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
         }
 
         .btn {
@@ -81,6 +89,11 @@
             background-color: #004494;
         }
 
+        .btn-primary:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
         .btn-secondary {
             background-color: #e2e6ea;
             color: #333;
@@ -101,6 +114,12 @@
             margin-bottom: 15px;
         }
 
+        h3 {
+            font-size: 1rem;
+            margin: 20px 0 10px 0;
+            color: #555;
+        }
+
         label {
             display: block;
             margin-bottom: 5px;
@@ -108,7 +127,7 @@
             font-size: 0.9rem;
         }
 
-        input[type="text"], textarea {
+        input[type="text"], input[type="search"], textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -117,6 +136,13 @@
             font-family: inherit;
             box-sizing: border-box;
             background-color: #fafafa;
+            font-size: 16px; /* Prevents zoom on iOS */
+        }
+
+        input[type="search"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
         }
 
         textarea {
@@ -139,9 +165,142 @@
             cursor: pointer;
             border-radius: 4px;
         }
-        
+
         .copy-btn:active {
             background: #ddd;
+        }
+
+        /* Search section styles */
+        .search-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .search-hint {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Results styles */
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .representative-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .representative-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            margin-bottom: 8px;
+            background: #fff;
+            transition: background-color 0.15s;
+        }
+
+        .representative-item:hover {
+            background: #f8f9fa;
+        }
+
+        .representative-item input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .representative-info {
+            flex: 1;
+        }
+
+        .representative-name {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .representative-details {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .representative-party {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .party-cdu { background: #000; color: #fff; }
+        .party-spd { background: #e3000f; color: #fff; }
+        .party-gruene { background: #46962b; color: #fff; }
+        .party-fdp { background: #ffed00; color: #000; }
+        .party-afd { background: #0489db; color: #fff; }
+        .party-linke { background: #be3075; color: #fff; }
+        .party-other { background: #6c757d; color: #fff; }
+
+        .badge-direct {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        .selection-count {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .selection-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .selection-actions button {
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border: 1px solid #ccc;
+            background: #fff;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+
+        .selection-actions button:hover {
+            background: #f8f9fa;
+        }
+
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
         }
 
         footer {
@@ -150,23 +309,68 @@
             font-size: 0.8rem;
             color: #666;
         }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .selection-actions {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Appell an den Bundestag</h1>
-    <p>Nutzen Sie diese Vorlage, um Ihre Besorgnis über die Lage in Rojava/Nordsyrien an Ihren Bundestagsabgeordneten zu senden.</p>
+    <p>Nutzen Sie diese Vorlage, um Ihre Besorgnis über die Lage in Rojava/Nordsyrien an Ihre Bundestagsabgeordneten zu senden.</p>
 
-    <div class="alert">
-        <strong>Wichtig:</strong> Bitte fügen Sie im E-Mail-Programm die E-Mail-Adresse Ihres Abgeordneten <a href="https://www.bundestag.de/abgeordnete" target="_blank" style="color: inherit; font-weight: bold;">(Link zum Verzeichnis)</a> manuell hinzu.
+    <!-- Search Section -->
+    <div class="search-section">
+        <label for="citySearch">Ihre Stadt oder Gemeinde:</label>
+        <input type="search" id="citySearch" placeholder="z.B. Berlin, München, Hamburg..." list="cityList" autocomplete="off">
+        <datalist id="cityList"></datalist>
+        <p class="search-hint">Geben Sie Ihren Wohnort ein, um Ihre zuständigen Abgeordneten zu finden.</p>
     </div>
 
-    <a id="mailtoLink" href="#" class="btn btn-primary">E-Mail-Programm öffnen</a>
+    <!-- Results Section -->
+    <div id="resultsSection" class="results-section">
+        <h2>Ihre Abgeordneten</h2>
+
+        <p class="selection-count"><span id="selectedCount">0</span> von <span id="totalCount">0</span> ausgewählt</p>
+
+        <!-- Email Button - placed above the list for visibility -->
+        <a id="mailtoLinkTop" href="#" class="btn btn-primary" style="display: none; margin-bottom: 15px;">E-Mail-Programm öffnen</a>
+
+        <div id="noSelectionHintTop" class="alert" style="display: none; margin-bottom: 15px;">
+            Bitte wählen Sie mindestens einen Abgeordneten aus.
+        </div>
+
+        <div class="selection-actions">
+            <button type="button" onclick="selectAll()">Alle auswählen</button>
+            <button type="button" onclick="selectNone()">Keine auswählen</button>
+            <button type="button" onclick="selectDirect()">Nur Direktmandate</button>
+        </div>
+
+        <ul id="repList" class="representative-list"></ul>
+    </div>
+
+    <!-- No Results -->
+    <div id="noResults" class="no-results" style="display: none;">
+        Keine Gemeinde gefunden. Bitte überprüfen Sie Ihre Eingabe.
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="loading" style="display: none;">
+        Lade Daten...
+    </div>
 
     <div class="section">
         <h2>Manuell kopieren</h2>
-        <p style="font-size: 0.9rem; color: #666;">Falls der Button oben nicht funktioniert, können Sie die Inhalte hier kopieren:</p>
+        <p style="font-size: 0.9rem; color: #666;">Falls der Button oben nicht funktioniert, können Sie die Inhalte hier kopieren.</p>
+        <p style="font-size: 0.9rem; color: #666;">Falls die Suche nicht funktioniert, finden Sie Ihre Abgeordneten unter <a href="https://www.bundestag.de/abgeordnete" target="_blank">bundestag.de/abgeordnete</a></p>
 
         <label for="subject">Betreff:</label>
         <div class="copy-group">
@@ -179,37 +383,37 @@
             <textarea id="body" readonly>Sehr geehrtes Mitglied im Deutschen Bundestag,
 
 ich wende mich heute als Bürgerin/Bürger dieses Landes mit großer Sorge über die aktuelle Entwicklung in Nordsyrien (Rojava) und die politische Haltung Deutschlands an Sie.
-                
+
 In den kurdisch verwalteten Gebieten eskaliert die Lage dramatisch.
-Die kurdische Selbstverwaltung, die über Jahre als Stabilitätsfaktor und als zentraler Akteur im Kampf gegen den sogenannten „Islamischen Staat“ galt, steht kurz vor dem vollständigen Zusammenbruch.
+Die kurdische Selbstverwaltung, die über Jahre als Stabilitätsfaktor und als zentraler Akteur im Kampf gegen den sogenannten „Islamischen Staat" galt, steht kurz vor dem vollständigen Zusammenbruch.
 Zivile Strukturen brechen weg, Städte wie Kobane sind ohne Strom, Wasser und stabile Kommunikationsverbindungen. Die Zivilbevölkerung ist massiver Gewalt, Massakern, Vertreibung und existenzieller Unsicherheit ausgesetzt.
-                
+
 Diese Entwicklung lässt der politische Westen aktiv geschehen, schreitet nicht ein.
 Der nicht gewählte, selbsternannte Übergangspräsident Ahmad al-Sharaa (ehemaliger Al-Kaida Terrorist) wird international politisch aufgewertet, während vor Ort islamistische Milizen vorrücken, Minderheiten verfolgt und Selbstverwaltungsstrukturen zerstört werden.
-Was offiziell als „Stabilisierung“ und „Wiederaufbau“ deklariert wird, wirkt faktisch wie die politische Absicherung und Festigung islamistischer Machtstrukturen.
-                
+Was offiziell als „Stabilisierung" und „Wiederaufbau" deklariert wird, wirkt faktisch wie die politische Absicherung und Festigung islamistischer Machtstrukturen.
+
 Besonders alarmierend sind die aktuellen Entwicklungen im Umgang mit inhaftierten IS-Kämpfern.
 Entgegen teilweise irreführender Darstellungen (https://www.tagesschau.de/ausland/asien/syrien-is-kaempfer-freigekommen-100.html) handelt es sich nicht um spontane Gefängnisausbrüche, sondern um gezielte Befreiungen durch islamistische Akteure im Machtbereich der Übergangsregierung:
-                
+
 https://www.heute.at/s/eskalation-in-syrien-tausende-is-kaempfer-befreit-120156498
-                
+
 Parallel dazu warnt die Deutsche Polizeigewerkschaft öffentlich vor den sicherheitspolitischen Folgen dieser Entwicklung und den Auswirkungen eines erneuten Erstarkens islamistischer Netzwerke.
-                
+
 https://www.zeit.de/gesellschaft/2026-01/syrien-polizei-gewerkschaft-is-kaempfer-gefaengnis-ausbruch-gxe
 
 Diese Warnungen unterstreichen, dass es sich nicht nur um ein regionales Konfliktgeschehen handelt, sondern um eine Entwicklung mit unmittelbarer Relevanz für die innere Sicherheit Deutschlands und Europas.
-                
+
 Vor diesem Hintergrund gehen weltweit Millionen Kurdinnen und Kurden auf die Straße – in Deutschland sind es hunderttausende Menschen.
 Diese Proteste sind Ausdruck existenzieller Sorge um Familienangehörige, Herkunftsregionen und die humanitäre Lage vor Ort.
-                
+
 Als Bürgerin/Bürger erwarte ich von der deutschen Politik eine klare, wertebasierte Haltung und aktives politisches Handeln.
-                
-Tragen Sie dazu bei, dass die politische Legitimation, die finanzielle Unterstützung und die diplomatische Anerkennung der augenblicklichen Machthaber kritisch überdacht, hinterfragt und bestenfalls ausgesetzt werden. 
-                
+
+Tragen Sie dazu bei, dass die politische Legitimation, die finanzielle Unterstützung und die diplomatische Anerkennung der augenblicklichen Machthaber kritisch überdacht, hinterfragt und bestenfalls ausgesetzt werden.
+
 Ebenso erwarte ich, dass Deutschland sich aktiv für internationale Untersuchungen zu den Verbrechen in den betroffenen Gebieten einsetzt und den politischen und diplomatischen Schutz kurdischer Selbstverwaltungsstrukturen unterstützt, die bislang maßgeblich zur Stabilisierung der Region und zur Bekämpfung des Terrorismus beigetragen haben.
-                
-Ich bitte Sie ausdrücklich um eine klare öffentliche Positionierung zur Eskalation in Rojava und damit den Menschenrechtsverletzungen der sogenannten Übergangsregierung. 
-                
+
+Ich bitte Sie ausdrücklich um eine klare öffentliche Positionierung zur Eskalation in Rojava und damit den Menschenrechtsverletzungen der sogenannten Übergangsregierung.
+
 Diese Entwicklungen betreffen nicht nur Syrien.
 Sie haben Auswirkungen auf Stabilität, Sicherheit und gesellschaftlichen Frieden auch in Deutschland.
 
@@ -218,38 +422,312 @@ Mit freundlichen Grüßen
             <button class="copy-btn" onclick="copyToClipboard('body')">Kopieren</button>
         </div>
     </div>
+
+    <footer>
+        <p>Datenquellen: <a href="https://www.abgeordnetenwatch.de/api" target="_blank">abgeordnetenwatch.de</a>, <a href="https://www.bundeswahlleiterin.de" target="_blank">Bundeswahlleiterin</a></p>
+    </footer>
 </div>
 
+<!-- Load data from external JS file -->
+<script src="data.js"></script>
+
 <script>
-    // Construct the mailto link dynamically to ensure encoding is correct
-    const subject = document.getElementById('subject').value;
-    const body = document.getElementById('body').value;
-    
-    const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    document.getElementById('mailtoLink').setAttribute('href', mailtoLink);
+    // Check if data loaded successfully
+    if (typeof APP_DATA === 'undefined') {
+        document.body.innerHTML = '<div style="padding: 40px; text-align: center; font-family: sans-serif;">' +
+            '<h1>Fehler</h1>' +
+            '<p>Die Datendatei (data.js) konnte nicht geladen werden.</p>' +
+            '<p>Bitte stellen Sie sicher, dass sich data.js im selben Ordner wie index.html befindet.</p>' +
+            '</div>';
+        throw new Error('APP_DATA not loaded');
+    }
+
+    // Global state
+    var selectedEmails = new Set();
+    var currentResults = [];
+
+    // DOM elements (cached for performance)
+    var citySearch = document.getElementById('citySearch');
+    var cityList = document.getElementById('cityList');
+    var resultsSection = document.getElementById('resultsSection');
+    var noResults = document.getElementById('noResults');
+    var mailtoLink = document.getElementById('mailtoLinkTop');
+    var noSelectionHint = document.getElementById('noSelectionHintTop');
+    var selectedCountEl = document.getElementById('selectedCount');
+    var totalCountEl = document.getElementById('totalCount');
+
+    // Initialize on page load
+    (function init() {
+        // Populate city autocomplete
+        var cities = Object.keys(APP_DATA.gemeinden).sort(function(a, b) {
+            return a.localeCompare(b, 'de');
+        });
+
+        var fragment = document.createDocumentFragment();
+        for (var i = 0; i < cities.length; i++) {
+            var option = document.createElement('option');
+            option.value = cities[i];
+            fragment.appendChild(option);
+        }
+        cityList.appendChild(fragment);
+
+        // Hide loading indicator
+        var loading = document.getElementById('loading');
+        if (loading) loading.style.display = 'none';
+    })();
+
+    // Search handler
+    citySearch.addEventListener('input', function(e) {
+        var query = e.target.value.trim();
+
+        if (query.length < 2) {
+            hideResults();
+            return;
+        }
+
+        // Check for exact match first
+        if (APP_DATA.gemeinden[query]) {
+            showResults(query);
+            return;
+        }
+
+        // Check for case-insensitive match
+        var lowerQuery = query.toLowerCase();
+        var gemeindeKeys = Object.keys(APP_DATA.gemeinden);
+        for (var i = 0; i < gemeindeKeys.length; i++) {
+            if (gemeindeKeys[i].toLowerCase() === lowerQuery) {
+                showResults(gemeindeKeys[i]);
+                return;
+            }
+        }
+
+        // Show no results
+        noResults.style.display = 'block';
+        resultsSection.classList.remove('active');
+        mailtoLink.style.display = 'none';
+    });
+
+    // Handle selection from datalist
+    citySearch.addEventListener('change', function(e) {
+        var query = e.target.value.trim();
+        if (APP_DATA.gemeinden[query]) {
+            showResults(query);
+        }
+    });
+
+    function hideResults() {
+        resultsSection.classList.remove('active');
+        noResults.style.display = 'none';
+        mailtoLink.style.display = 'none';
+        noSelectionHint.style.display = 'none';
+    }
+
+    function showResults(gemeinde) {
+        var gemeindeData = APP_DATA.gemeinden[gemeinde];
+        if (!gemeindeData) return;
+
+        noResults.style.display = 'none';
+
+        var wahlkreise = Array.isArray(gemeindeData.wahlkreis)
+            ? gemeindeData.wahlkreis
+            : [gemeindeData.wahlkreis];
+
+        // Find ALL representatives assigned to the user's Wahlkreis (both direkt and liste)
+        // This matches bundestag.de behavior - typically returns 2-5 reps per Wahlkreis
+        var wahlkreisReps = [];
+
+        for (var i = 0; i < APP_DATA.representatives.length; i++) {
+            var r = APP_DATA.representatives[i];
+            if (wahlkreise.indexOf(r.wahlkreis) !== -1) {
+                wahlkreisReps.push(r);
+            }
+        }
+
+        // Sort: direct mandates first, then by party and name
+        wahlkreisReps.sort(function(a, b) {
+            // Direct mandates first
+            if (a.type === 'direkt' && b.type !== 'direkt') return -1;
+            if (a.type !== 'direkt' && b.type === 'direkt') return 1;
+            // Then by party
+            if (a.party !== b.party) return a.party.localeCompare(b.party, 'de');
+            // Then by name
+            return a.name.localeCompare(b.name, 'de');
+        });
+
+        currentResults = wahlkreisReps;
+        selectedEmails.clear();
+
+        // Auto-select ALL representatives (typically just 2-5 people)
+        for (var j = 0; j < wahlkreisReps.length; j++) {
+            selectedEmails.add(wahlkreisReps[j].email);
+        }
+
+        renderResults(wahlkreisReps);
+
+        resultsSection.classList.add('active');
+        updateMailtoLink();
+    }
+
+    function renderResults(reps) {
+        // Render all representatives in a single list
+        var repList = document.getElementById('repList');
+        repList.innerHTML = '';
+
+        for (var i = 0; i < reps.length; i++) {
+            repList.appendChild(createRepresentativeItem(reps[i], true));
+        }
+
+        updateCounts();
+    }
+
+    function createRepresentativeItem(rep, isSelected) {
+        var li = document.createElement('li');
+        li.className = 'representative-item';
+
+        var partyClass = getPartyClass(rep.party);
+        var directBadge = rep.type === 'direkt'
+            ? '<span class="badge-direct">Direktmandat</span>'
+            : '';
+
+        // Escape email for use in ID (replace dots and @ with safe chars)
+        var safeId = rep.email.replace(/[@.]/g, '-');
+
+        li.innerHTML =
+            '<input type="checkbox" id="rep-' + safeId + '" ' + (isSelected ? 'checked' : '') +
+            ' onchange="toggleRepresentative(\'' + rep.email + '\')">' +
+            '<label for="rep-' + safeId + '" class="representative-info">' +
+            '<div class="representative-name">' +
+            rep.name +
+            ' <span class="representative-party ' + partyClass + '">' + rep.party + '</span>' +
+            directBadge +
+            '</div>' +
+            '<div class="representative-details">' +
+            (rep.wahlkreis_name ? 'Wahlkreis: ' + rep.wahlkreis_name : (rep.bundesland || '')) +
+            '</div>' +
+            '</label>';
+
+        if (isSelected) {
+            selectedEmails.add(rep.email);
+        }
+
+        return li;
+    }
+
+    function getPartyClass(party) {
+        if (party.indexOf('CDU') !== -1 || party.indexOf('CSU') !== -1) return 'party-cdu';
+        if (party.indexOf('SPD') !== -1) return 'party-spd';
+        if (party.indexOf('GRÜNE') !== -1 || party.indexOf('Grüne') !== -1) return 'party-gruene';
+        if (party.indexOf('FDP') !== -1) return 'party-fdp';
+        if (party.indexOf('AfD') !== -1) return 'party-afd';
+        if (party.indexOf('Linke') !== -1) return 'party-linke';
+        return 'party-other';
+    }
+
+    function toggleRepresentative(email) {
+        if (selectedEmails.has(email)) {
+            selectedEmails.delete(email);
+        } else {
+            selectedEmails.add(email);
+        }
+        // Update checkbox state
+        var safeId = email.replace(/[@.]/g, '-');
+        var checkbox = document.getElementById('rep-' + safeId);
+        if (checkbox) {
+            checkbox.checked = selectedEmails.has(email);
+        }
+        updateMailtoLink();
+        updateCounts();
+    }
+
+    function selectAll() {
+        for (var i = 0; i < currentResults.length; i++) {
+            var rep = currentResults[i];
+            selectedEmails.add(rep.email);
+            var safeId = rep.email.replace(/[@.]/g, '-');
+            var checkbox = document.getElementById('rep-' + safeId);
+            if (checkbox) checkbox.checked = true;
+        }
+        updateMailtoLink();
+        updateCounts();
+    }
+
+    function selectNone() {
+        selectedEmails.clear();
+        for (var i = 0; i < currentResults.length; i++) {
+            var rep = currentResults[i];
+            var safeId = rep.email.replace(/[@.]/g, '-');
+            var checkbox = document.getElementById('rep-' + safeId);
+            if (checkbox) checkbox.checked = false;
+        }
+        updateMailtoLink();
+        updateCounts();
+    }
+
+    function selectDirect() {
+        selectedEmails.clear();
+        for (var i = 0; i < currentResults.length; i++) {
+            var rep = currentResults[i];
+            var safeId = rep.email.replace(/[@.]/g, '-');
+            var checkbox = document.getElementById('rep-' + safeId);
+            if (checkbox) {
+                if (rep.type === 'direkt') {
+                    selectedEmails.add(rep.email);
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false;
+                }
+            }
+        }
+        updateMailtoLink();
+        updateCounts();
+    }
+
+    function updateCounts() {
+        selectedCountEl.textContent = selectedEmails.size;
+        totalCountEl.textContent = currentResults.length;
+    }
+
+    function updateMailtoLink() {
+        var subject = document.getElementById('subject').value;
+        var body = document.getElementById('body').value;
+
+        if (selectedEmails.size === 0) {
+            mailtoLink.style.display = 'none';
+            noSelectionHint.style.display = 'block';
+            return;
+        }
+
+        noSelectionHint.style.display = 'none';
+
+        var emails = Array.from(selectedEmails).join(',');
+        var href = 'mailto:' + emails + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+        mailtoLink.href = href;
+        mailtoLink.textContent = 'E-Mail an ' + selectedEmails.size + ' Abgeordnete senden';
+        mailtoLink.style.display = 'block';
+    }
 
     function copyToClipboard(elementId) {
-        const copyText = document.getElementById(elementId);
+        var copyText = document.getElementById(elementId);
         copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
-        
+        copyText.setSelectionRange(0, 99999);
+
         try {
-            navigator.clipboard.writeText(copyText.value).then(() => {
+            navigator.clipboard.writeText(copyText.value).then(function() {
                 showFeedback(elementId);
             });
         } catch (err) {
-            // Fallback for older browsers
-            document.execCommand("copy");
+            document.execCommand('copy');
             showFeedback(elementId);
         }
     }
 
     function showFeedback(elementId) {
-        // Find the button next to the element
-        const btn = document.querySelector(`button[onclick="copyToClipboard('${elementId}')"]`);
-        const originalText = btn.innerText;
-        btn.innerText = "Kopiert!";
-        setTimeout(() => {
+        var btn = document.querySelector('button[onclick="copyToClipboard(\'' + elementId + '\')"]');
+        if (!btn) return;
+        var originalText = btn.innerText;
+        btn.innerText = 'Kopiert!';
+        setTimeout(function() {
             btn.innerText = originalText;
         }, 2000);
     }
